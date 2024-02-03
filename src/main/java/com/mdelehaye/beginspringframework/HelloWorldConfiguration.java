@@ -3,7 +3,8 @@ package com.mdelehaye.beginspringframework;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-record Person (String name, int age) {};
+record Person (String name, int age, Address address) {};
+record Address (String firstLine, String city) {};
 
 @Configuration 
 public class HelloWorldConfiguration {
@@ -13,14 +14,33 @@ public class HelloWorldConfiguration {
 	}
 	
 	@Bean
-	public int age() {
+	public int age() { 
 		return 15; 
 	}
 	
 	@Bean 
 	public Person person() {
-		var person = new Person("John", 20);
-		return person;
+		return new Person("John", 20, new Address("Main Street", "Utrecht"));	
+	}
+	
+	@Bean 
+	public Person person2MethodCall() {
+		return new Person(name(), age(), address());	
+	}
+
+	@Bean 
+	public Person person3Parameters(String name, int age, Address address2) {
+		return new Person(name, age, address2);	
+	}
+
+	@Bean(name= "address2")
+	public Address address() {
+		return new Address("48, Miller Street", "Glasgow");	 
+	}
+
+	@Bean(name= "address3")
+	public Address anotherAddress() {
+		return new Address("5, South Frederick Street", "Edinburgh");	 
 	}
 }
  
