@@ -1,4 +1,4 @@
-package com.mdelehaye.beginspringframework;
+package com.mdelehaye.beginspringframework.helloworld;
 
 import java.util.Arrays;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -6,11 +6,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class App02HelloWorldSpring {
 	public static void main(String[] args) {
 		// 1: Launch a Spring Context
-		
-		var context = 
-			new AnnotationConfigApplicationContext(HelloWorldConfiguration.class);
-		
-		// 2: Configure the things we want Spring to manage - 
+		try(var context = 
+				new AnnotationConfigApplicationContext(HelloWorldConfiguration.class)) {
+			
+					// 2: Configure the things we want Spring to manage - 
 		// HelloWorldConfiguration - @Configuration
 		// name - @Bean
 		
@@ -29,9 +28,14 @@ public class App02HelloWorldSpring {
 		
 		System.out.println(context.getBean("address3"));
 		
-//		System.out.println(context.getBean(Address.class));
+		System.out.println(context.getBean(Person.class));
 		
-		Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
+		System.out.println(context.getBean(Address.class));
 		
+		System.out.println(context.getBean("person5Qualifier"));
+		
+//		Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
+		
+		} ;
 	}
 }
